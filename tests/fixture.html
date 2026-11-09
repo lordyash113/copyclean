@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>CopyClean test tables</title>
+<h1>CopyClean manual test page</h1>
+<table border="1"><caption>Merged cells and special characters</caption>
+<thead><tr><th>Name</th><th colspan="2">Details</th></tr></thead>
+<tbody><tr><td rowspan="2">Ada</td><td>Comma, quote "test"</td><td>Line one<br>Line two</td></tr>
+<tr><td>=1+1</td><td>&lt;script&gt;alert('text only')&lt;/script&gt;</td></tr>
+<tr><td>Grace</td><td>Tab:&#9;value</td><td>Pipe | asterisk *</td></tr>
+<tr><td rowspan="0">Group</td><td>Four</td><td></td></tr><tr><td>Five</td><td></td></tr>
+<tr><td>Six</td><td>Six</td><td>Six</td></tr></tbody></table>
+<table><caption>Empty table</caption></table>
+<table border="1"><caption>Outer table</caption><tr><td>Outer content<table border="1"><caption>Nested table</caption><tr><td>Nested content</td></tr></table></td></tr></table>
+</html>

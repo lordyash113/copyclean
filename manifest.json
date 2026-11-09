@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "CopyClean",
+  "version": "1.4.2",
+  "minimum_chrome_version": "116",
+  "description": "Preview and export HTML tables locally as CSV, TSV, JSON, Markdown, or formatted tables.",
+  "icons": {
+    "16": "icons/image.png",
+    "32": "icons/image.png",
+    "48": "icons/image.png",
+    "128": "icons/image.png"
+  },
+  "permissions": [
+    "scripting",
+    "clipboardWrite",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "popup.html"
+  },
+  "action": {
+    "default_title": "CopyClean \u2014 export tables",
+    "default_icon": {
+      "16": "icons/image.png",
+      "32": "icons/image.png",
+      "48": "icons/image.png",
+      "128": "icons/image.png"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'"
+  }
+}

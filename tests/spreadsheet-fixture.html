@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>CopyClean spreadsheet paste fixture</title></head><body>
+<h1>Excel Online / Google Sheets paste fixture</h1>
+<p>Copy with Formatted Table. Press Escape in the destination, select A1 once, then paste with Ctrl+V (or Cmd+V). Do not paste into the formula bar or while editing a cell.</p>
+<table border="1">
+  <thead><tr><th rowspan="2">Name</th><th colspan="2">Compensation</th><th rowspan="2">Notes</th></tr>
+  <tr><th>Salary</th><th>Bonus</th></tr></thead>
+  <tbody><tr><td rowspan="2">雪 😀 नमस्ते</td><td>$162,700</td><td></td><td>He said &quot;hi&quot;</td></tr>
+  <tr><td>$170,000</td><td>$1,200</td><td>Line 1<br>Line 2</td></tr>
+  <tr><td>Alice</td><td>$98,000</td><td></td><td></td></tr></tbody>
+</table>
+<p>Expect four columns, two header rows, preserved salary commas, empty cells, Unicode, and an in-cell line break. HTML supports the merges; TSV repeats merged values and has no visual formatting.</p>
+</body></html>

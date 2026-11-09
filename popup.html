@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CopyClean</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="popup.css">
+  <script type="module" src="popup.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><path d="M3.5 10h17M10 10v9.5"/><path d="m15 14 1.5 1.5 3-3"/></svg></span>
+      <div><h1>CopyClean</h1><p>Clean tables. Ready to paste.</p></div>
+    </div>
+    <button id="theme-toggle" class="quiet theme-toggle" type="button" title="Switch to dark mode" aria-label="Toggle dark mode" aria-pressed="false"><svg id="theme-moon" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16.7 11.2A7 7 0 0 1 8.8 3.3a7 7 0 1 0 7.9 7.9Z"/></svg><svg id="theme-sun" aria-hidden="true" hidden viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="3.2"/><path d="M10 1.5v2m0 13v2M1.5 10h2m13 0h2M4 4l1.4 1.4m9.2 9.2L16 16M4 16l1.4-1.4m9.2-9.2L16 4"/></svg></button>
+    <button id="restart" class="quiet" type="button" title="Restart CopyClean" aria-label="Restart CopyClean">↻</button>
+    <p id="scan-announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+  </header>
+  <main aria-busy="true">
+    <section class="panel-card discovery-card" aria-labelledby="data-heading">
+      <div class="section-heading"><h2 id="data-heading">Page data</h2><span class="eyebrow">ACTIVE PAGE</span></div>
+      <div class="summary"><span class="dot" aria-hidden="true"></span><strong id="count">Detecting tables…</strong></div>
+      <label for="table-select">Select table</label>
+      <select id="table-select" aria-describedby="selection-help" disabled><option>No tables selected</option></select>
+      <p id="selection-help" class="hint">HTML tables found on the active page.</p>
+    </section>
+
+    <section class="panel-card preview-card" aria-labelledby="preview-heading">
+      <div class="preview-heading"><h2 id="preview-heading">Preview</h2><span id="dimensions">First 5 rows</span></div>
+      <p id="source-type" class="source-type" hidden></p>
+      <div id="preview" class="preview" tabindex="0" role="region" aria-label="Table preview" aria-describedby="dimensions preview-help scroll-hint" aria-busy="true" data-state="loading"><p class="placeholder">Looking for HTML tables…</p></div>
+      <p id="scroll-hint" class="hint scroll-hint" hidden>↔ Scroll horizontally to see all columns. Use arrow keys when the preview is focused.</p>
+      <p id="preview-help" class="hint preview-help">First 5 rows shown. Exports include all extracted rows.</p>
+    </section>
+
+    <section class="panel-card export-card" aria-labelledby="export-heading">
+      <div class="section-heading"><h2 id="export-heading">Export</h2><span class="eyebrow">COPY OR SAVE</span></div>
+      <label for="format">Download format</label>
+      <select id="format" aria-describedby="copy-hint"><option value="csv" selected>CSV</option><option value="json">JSON</option><option value="markdown">Markdown</option><option value="tsv">TSV</option><option value="formatted">Formatted Table</option></select>
+      <p id="copy-hint" class="hint">CSV is for file import. For spreadsheet paste into columns, select Formatted Table or TSV.</p>
+      <div class="protection-option">
+        <label class="checkbox" for="protect"><input type="checkbox" id="protect" aria-describedby="format-hint" checked><span>Protect against spreadsheet formulas</span></label>
+        <p class="hint" id="format-hint">Adds an apostrophe to formula-like values in spreadsheet exports.</p>
+      </div>
+    </section>
+  </main>
+  <footer><p class="privacy-heading"><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m10 2 6 2.5V9c0 4-3.5 6.5-6 8-2.5-1.5-6-4-6-8V4.5L10 2Z"/><path d="m7.5 9 1.7 1.7 3.3-3.4"/></svg>Processed locally in your browser</p><p>Website access lets CopyClean read HTTP and HTTPS pages for HTML tables. Scans run while this panel is open or when requested. Nothing is sent by CopyClean.</p></footer>
+  <section class="action-bar" aria-label="Export actions">
+    <div id="feedback" class="feedback" role="region" aria-labelledby="feedback-title" data-active="false" data-tone="info">
+      <span id="feedback-icon" class="feedback-icon" aria-hidden="true"></span>
+      <div class="feedback-content"><p id="feedback-title" class="feedback-title"></p><p id="status" role="status" aria-live="polite" aria-atomic="true"></p></div>
+    </div>
+    <p id="action-summary" class="action-summary">Select a table to export</p>
+    <div class="actions">
+      <button id="copy" type="button" aria-describedby="copy-hint" disabled><svg class="button-icon" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="9" height="10" rx="2"/><path d="M12 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/></svg><span id="copy-label">Copy Table</span></button>
+      <button id="download" class="secondary" type="button" title="Download the selected format" disabled><svg class="button-icon" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9m-3-3 3 3 3-3M4 13v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3"/></svg>Download</button>
+    </div>
+  </section>
+</body>
+</html>
