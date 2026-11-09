@@ -1,0 +1,116 @@
+{
+  "version": "1.4.2",
+  "validatedAt": "2026-11-09T04:58:19.7910350Z",
+  "archive": "C:\\Users\\devil\\OneDrive\\Desktop\\copyclean\\dist\\CopyClean-1.4.2.zip",
+  "zipSha256": "FEB1FF8A06F0ED7AE810F2713F9934E4E024E2A134AA73512DA1C5023EB67D45",
+  "entryCount": 15,
+  "sourceHashesMatch": true,
+  "manifestAtRoot": true,
+  "manifestReferencesExist": true,
+  "htmlReferencesExist": true,
+  "jsImportsExist": true,
+  "iconMapsCorrect": true,
+  "icons": [
+    {
+      "path": "icons/icon16.png",
+      "width": 16,
+      "height": 16,
+      "minimumAlpha": 255
+    },
+    {
+      "path": "icons/icon32.png",
+      "width": 32,
+      "height": 32,
+      "minimumAlpha": 255
+    },
+    {
+      "path": "icons/icon48.png",
+      "width": 48,
+      "height": 48,
+      "minimumAlpha": 255
+    },
+    {
+      "path": "icons/icon128.png",
+      "width": 128,
+      "height": 128,
+      "minimumAlpha": 255
+    }
+  ],
+  "files": [
+    {
+      "path": "manifest.json",
+      "bytes": 1097,
+      "sha256": "9ED4E096C90A3B32740FFEB2EF73A4FE6704FF1D7F1CA0FFD955F0483B7F02AF"
+    },
+    {
+      "path": "background.js",
+      "bytes": 1972,
+      "sha256": "2D36482B5B54F65B6025973DD1A753DACEE3801DD5BBF36150BF45B3A8B4729F"
+    },
+    {
+      "path": "theme.js",
+      "bytes": 1696,
+      "sha256": "C29B1D4FB4E8E01C6171D91803469BB118D62EAB214A14EC4B9C8B944D2D9452"
+    },
+    {
+      "path": "popup.html",
+      "bytes": 5980,
+      "sha256": "935E803E3F627DE8C24E7B89FA7787B62B6569EBA2A65826BDA09FBCC14C3569"
+    },
+    {
+      "path": "popup.css",
+      "bytes": 12514,
+      "sha256": "A29099A1020F6CD98BA25B24C58E73417F237FF1CE952C7047A96E5E804CD166"
+    },
+    {
+      "path": "popup.js",
+      "bytes": 14738,
+      "sha256": "F3D377C3111E940BB291F4E6AE9EE886659065DD0BDB5BB86DB4B55387C6C236"
+    },
+    {
+      "path": "content/extract-tables.js",
+      "bytes": 6523,
+      "sha256": "A243C36A322B6CF618E59DD7A65FD8EEA162BFA08931D47CAF96A1D90D131CE4"
+    },
+    {
+      "path": "lib/scanner.js",
+      "bytes": 4971,
+      "sha256": "B72AD76E3CDAAE7D7B53A78B31B8DCFB3B301F6C0E59F0F8F8AF34A56E371DA3"
+    },
+    {
+      "path": "lib/page-access.js",
+      "bytes": 2340,
+      "sha256": "484D1F0B16356D786F25155BDA62F0274CE46B4438EFB70D428866D441516B04"
+    },
+    {
+      "path": "lib/exporters.js",
+      "bytes": 4854,
+      "sha256": "98E991933C638E64F1000F1EC252AA854BE5888C268441D771AA3B2B1935E9B8"
+    },
+    {
+      "path": "lib/clipboard.js",
+      "bytes": 2720,
+      "sha256": "374689B61AA5EAA719D5D73CC5857563871166B5BD92D0575EBC49E7D420C5B0"
+    },
+    {
+      "path": "icons/icon16.png",
+      "bytes": 969,
+      "sha256": "B5783CD5E85056D2A52A35B7E67C4A5C379139F01DFAFC8B79D91E714ADBD7D1"
+    },
+    {
+      "path": "icons/icon32.png",
+      "bytes": 2796,
+      "sha256": "F742B5C1C55595260DCCE506B1D5BFEB19461335A2D3781ED216954AA992C5FF"
+    },
+    {
+      "path": "icons/icon48.png",
+      "bytes": 5305,
+      "sha256": "2D5F023FDC3A6500C910BC7F6C07236DD9AE70C317B289C2772C07960628CAA0"
+    },
+    {
+      "path": "icons/icon128.png",
+      "bytes": 26616,
+      "sha256": "F524F4B36966381C8CA39E78330C7136D7E2BE362B3796DDF629671D266AFC7C"
+    }
+  ]
+}

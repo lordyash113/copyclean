@@ -1,0 +1,64 @@
+# CopyClean pre-release audit — November 9, 2026
+
+Verdict: production package prepared; submission remains conditional on installed-extension and destination-app manual checks below. No confirmed runtime release-blocking defect was found. Runtime behavior, permissions, version, and website are unchanged; manifest icon references were updated in the icon follow-up below. This report supersedes historical test counts in AUDIT.md for this audit run.
+
+## Manifest and permissions
+
+Manifest V3, version 1.4.2, minimum Chrome 116, packaged background service worker, side_panel.default_path popup.html, and action without default_popup are consistent with the code. Toolbar activation calls sidePanel.open synchronously within its user gesture. Chrome 116 is the minimum for that API. Manifest/package versions agree. Confirm 1.4.2 exceeds any version already uploaded before submitting an update; dashboard history was not accessed.
+
+Permissions are used: scripting injects the packaged extractor; clipboardWrite writes on Copy Table; sidePanel displays/opens the UI. HTTP/HTTPS host access enables automatic scanning after cross-origin tab changes while the panel is visible, plus matching URL metadata. Replacing it with activeTab would require further gestures and change this working feature. No tabs, history, cookies, storage, downloads, clipboardRead, or network interception permission is requested. Tab lifecycle/query APIs used here do not require the tabs permission; host permissions provide matching URL access. Explain broad website access in the store submission and test withheld site access manually.
+
+Four exact PNG sizes now exist: icons/icon16.png, icon32.png, icon48.png, and icon128.png. Both manifest icon maps reference matching dimensions. The approved 1254 by 1254 RGB source is unchanged and excluded from the production ZIP. High-quality bicubic downsampling preserves framing, proportions, colors, and the source's opaque white background; no transparency was invented. Native-size visual inspection on light/dark backgrounds confirmed the mark is visible at 16px, with expected softening of fine details. Preview: .test-artifacts/icon-sizes.png. Version remains 1.4.2 for this pre-submission revision; increment if that version has already been uploaded.
+
+## Security and privacy
+
+Reviewed every packaged JS, HTML, CSS, and manifest file. No runtime HTTP client, analytics, telemetry, remote scripts/fonts, dynamic evaluation, hard-coded credentials, external transmission, or third-party runtime library was found. CSP restricts scripts/styles/images to packaged resources, connections to none, and blocks objects/forms/base overrides. No externally_connectable or web_accessible_resources entries. The packaged content script runs in the default isolated world, main frame only, and returns text/merge metadata directly through executeScript. Worker messages carry tab/window IDs and scan metadata; it observes lifecycle even with the panel closed but does not itself extract tables.
+
+Untrusted labels/previews use textContent. Exported HTML escapes values and validates merge coordinates. Formula protection defaults on for CSV, TSV, and formatted output and is deliberately user-disableable. Extractor bounds table counts, cells, columns, text, and work; warnings disclose omitted/unavailable tables. Hidden text/tables may be included. No redaction is promised. Only theme preference is persisted in localStorage. Extracted data stays in panel memory; lifecycle transitions invalidate data and stale results. Clipboard/files can outlive the panel and may be shared by destination applications or sync services.
+
+Current privacy policy URL (successfully retrieved and compared again during the final recheck on November 9, 2026):
+https://copyclean-privacy.zelvori-studio.workers.dev/
+
+Its extension claims agree with the reviewed code: visible-panel main-document scanning, no background extraction while closed, local processing, theme-only persistent storage, clipboard writing without reading, explicit exports, no tracking/backend, broad HTTP/HTTPS access, hidden text warning, and downstream clipboard/file caveats. No substantive inaccurate extension data-practice claim was identified. Wording issue: the website section says “When hosted on Cloudflare Pages,” while the supplied URL is a workers.dev endpoint. Recommend generic “hosted on Cloudflare” unless Pages deployment is independently established. Hosting configuration was not inspected; no website change was made. The served HTML has no scripts, external fonts, cookies code, or analytics resources; infrastructure logging/cookies were not audited. No legal compliance or Web Store acceptance guarantee is implied.
+
+## Executed verification
+
+- npm test: 79 tests passed, 0 failed, 0 skipped. Node/jsdom with simulated extension APIs, not an installed-extension test. Covers automatic detection, selection, five-row/all-column preview, all export formats, download Blob bytes, rich clipboard/fallback/error paths, unsupported pages, restart/races/cleanup, themes, accessibility, escaping and spreadsheet formulas.
+- npm run test:panel:browser: passed 14 light/dark responsive/state cases plus keyboard focus in Chrome 157.0.8103.38. Real Chrome rendering, simulated extension and clipboard APIs. Screenshots in .test-artifacts/panel. No human visual review or installed-extension side-panel test.
+- npm run test:spreadsheet:browser: passed actual headless Chrome HTML/TSV clipboard write/read and fallback. Salary commas, quotes, empty cells, Unicode, multiline TSV, and merged HTML checked. Runs actual modules on localhost, not installed extension. Headless clipboard is not proof of Windows/Excel/Sheets paste.
+- npm run test:live: passed two W3Schools scenarios, direct open and toolbar rescan, each detecting two tables and checking the seven-row, three-column customers table, preview, and all five copy/download paths. Live HTML fetched; execution in jsdom with simulated Chrome APIs.
+- npm audit --json: exit 0, zero reported vulnerabilities in development dependencies. No dependencies are shipped in the ZIP.
+
+No executed test failed. The first policy fetch through the web tool was inaccessible; sandboxed PowerShell fetch was denied socket access. An approved HTTPS retry retrieved the policy successfully. These access failures are not extension test failures.
+
+Not executed: native Office paste suite, manual Chrome UI tests, real Excel/Google Sheets paste, actual browser download/save verification, minimum-version Chrome 116 testing, or Web Store upload/validation. No test result is inferred from historical reports.
+
+## Production package
+
+ZIP uses an explicit 15-file allowlist: manifest.json, background.js, theme.js, popup.html, popup.css, popup.js, content/extract-tables.js, four lib modules, and four size-specific icons. manifest.json is at ZIP root; archive paths use forward slashes. Tests, node_modules, .git, privacy-site, development manifests/lockfile, reports, logs, screenshots, and environment/secret files are excluded by construction. Runtime JS/HTML/CSS and the original icon remain unchanged; only manifest icon paths changed.
+
+Packaging validation checks exact entry count/names, safe archive paths, nonempty entries, every entry SHA-256 against its source, MV3/version, referenced service worker/panel/icons, HTML script/stylesheet paths, relative JS imports, and PNG dimensions. dist/CopyClean-1.4.2.validation.json records results and ZIP SHA-256 after successful validation. Loading into Chrome and Web Store validation are separate manual gates.
+
+## Remaining manual release gates
+
+1. Extract the production ZIP, Load unpacked in a fresh Chrome profile, inspect extension/service-worker errors and permission warnings, pin the toolbar icon, open the real side panel, and verify opening/closing and automatic detection across HTTP/HTTPS sites, tabs, windows, and navigation. Verify no injection while closed. Test supported minimum Chrome if retained.
+2. Select among multiple tables, inspect every preview column, exercise keyboard navigation, long text/Unicode/merged cells, empty and dynamically inserted tables (Restart rescans), light/dark preference persistence, and repeated Restart. Test restricted Chrome pages, Web Store, file URLs, protected PDF viewers, and withheld per-site access with recovery.
+3. Select Formatted Table or TSV before pasting into Excel desktop/Online and Google Sheets. CSV is the default and copies CSV text; Download format currently controls BOTH Copy and Download. Confirm cell boundaries, quotes, salary commas, multiline cells, Unicode, merges, empty cells, and formula protection. The current UI explains the format choice; the shared selector is a usability caveat, not a failing test.
+4. Actually download CSV, TSV, JSON, Markdown, and formatted HTML from the installed panel; open each saved file and verify extension, full row/column count, Unicode, quoting, and formula protection. UTF-8 exports have no BOM, so verify Excel import encoding/locale rather than assuming double-click CSV behavior.
+5. Check store version history, icon presentation/acceptance, screenshots/listing accuracy, single-purpose description, permission justifications, privacy URL, and dashboard privacy disclosures against actual local data access. Review the Cloudflare wording above separately. No upload, publishing, or website modification was performed.
+
+Reference documentation consulted: https://developer.chrome.com/docs/extensions/reference/api/scripting ; https://developer.chrome.com/docs/extensions/reference/api/sidePanel ; https://developer.chrome.com/docs/extensions/reference/manifest/icons ; https://developer.chrome.com/docs/extensions/reference/permissions-list .
+
+## Icon follow-up validation — November 9, 2026
+
+Regenerated only by deterministic resizing, with no logo redesign or AI image generation. PNG sizes: 16px 969 bytes, 32px 2,796 bytes, 48px 5,305 bytes, 128px 26,616 bytes. All pixels remain opaque, matching the source. npm test rerun after the manifest update: 79 passed, zero failures/skips. Rebuilt ZIP validated: 15 allowlisted entries, matching source hashes, manifest at root, matching icon maps/dimensions, and all manifest/HTML/import references present. Original icon is retained in the workspace only. Chrome rendering/clipboard/live-page suites above are earlier audit results and were not rerun for this asset-only change. Installed Chrome toolbar appearance remains a manual check. The first preview drawing attempt failed on an unavailable helper method; it was corrected and the preview successfully generated and inspected.
+
+## Final pre-publication recheck — November 9, 2026
+
+Current policy URL successfully fetched over HTTPS: https://copyclean-privacy.zelvori-studio.workers.dev/ . Its extension data-practice claims agree with the source. The minor Cloudflare Pages versus Workers wording remains; website unchanged.
+
+Executed again against the current source: npm test (79 passed, zero failures/skips); npm run test:panel:browser (14 cases plus keyboard focus passed in Chrome 157.0.8103.38, extension APIs simulated); npm run test:spreadsheet:browser (real headless Chrome HTML/TSV write/read and fallback passed, not Excel/Sheets); npm run test:live (both live-page jsdom scenarios passed); npm audit --json (zero vulnerabilities). These current results supersede the earlier note that browser/live suites were not rerun after icon updates.
+
+Existing production ZIP revalidated without rebuilding: 15 exact unique nonempty allowlisted entries, manifest at root, every archived file hash matches both current source and saved validation, matching manifest/package version 1.4.2, correct icon paths and PNG dimensions/signatures, manifest/HTML/module references present, and all packaged JavaScript passes node --check. No old policy URL or recognized credential patterns found in packaged text. ZIP is 56,953 bytes; SHA-256 FEB1FF8A06F0ED7AE810F2713F9934E4E024E2A134AA73512DA1C5023EB67D45. A sandboxed archive-inspection attempt was blocked by PowerShell language mode; approved retry completed successfully. No extension test failed.
+
+No confirmed new runtime release blocker. Remaining release gates are unchanged: actual installed-extension operation and toolbar visibility; real downloads opened from disk; real Excel/Google Sheets paste; restricted and withheld-access behavior in installed Chrome; Chrome 116 compatibility if advertised; dashboard privacy URL/disclosures/listing and uploaded-version history. Use the new URL in the Chrome Web Store Developer Dashboard separately. Version must exceed previously uploaded versions for an update. No publishing, dashboard edits, website changes, or runtime changes were performed during this recheck.

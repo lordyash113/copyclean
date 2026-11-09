@@ -26,6 +26,8 @@ After editing/updating files, reload the extension at `chrome://extensions`. Chr
 
 ## Permissions and privacy
 
+Privacy policy: https://copyclean-privacy.zelvori-studio.workers.dev/ . Set this URL separately in the Chrome Web Store Developer Dashboard.
+
 | Permission | Purpose |
 | --- | --- |
 | `scripting` | Inject the packaged HTML extractor into the active tab's main frame in Chrome's default isolated world. |
@@ -50,6 +52,6 @@ Use Node 22.22.2+, 24.15+, or 26+ as allowed by package engines. `npm ci` instal
 - `npm run test:live`: explicit GET to public W3Schools HTML-table examples followed by jsdom extraction/export checks; sends no extracted data and is not installed-extension browser testing.
 - `npm audit`: queries npm's advisory registry with dependency metadata. Package installation also contacts npm. These developer operations are not extension runtime traffic.
 
-Production files: `manifest.json`, `background.js`, `theme.js`, `popup.html`, `popup.css`, `popup.js`, `content/extract-tables.js`, and `lib/*.js`. Exclude dependencies, tests, fixtures, temporary profiles, screenshots, and unrelated files from release packaging. No publishing/build/upload is performed by these commands.
+Production files: `manifest.json`, `background.js`, `theme.js`, `popup.html`, `popup.css`, `popup.js`, `content/extract-tables.js`, `lib/*.js`, and `icons/icon16.png`, `icons/icon32.png`, `icons/icon48.png`, and `icons/icon128.png`. Exclude dependencies, tests, fixtures, temporary profiles, screenshots, and unrelated files from release packaging. No publishing/build/upload is performed by these commands.
 
-See [AUDIT.md](AUDIT.md) for the current pre-release findings, fixes, evidence, and remaining release checks.
+See [PRE_RELEASE_AUDIT.md](PRE_RELEASE_AUDIT.md) for the latest verification and remaining manual release checks; [AUDIT.md](AUDIT.md) preserves the earlier audit. The validated production package is [dist/CopyClean-1.4.2.zip](dist/CopyClean-1.4.2.zip), with file hashes and icon dimensions in [its validation report](dist/CopyClean-1.4.2.validation.json).
